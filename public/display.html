@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Layar Presensi Kelas - Dynamic QR Proyektor</title>
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- QR Code Client-Side Generator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body style="background: radial-gradient(circle at center, #111827 0%, #030712 100%);">
+  <div class="app-container">
+    <!-- Header Bar -->
+    <header class="header-bar">
+      <div class="brand-badge">
+        <div class="brand-icon">QR</div>
+        <div>
+          <div>SMA Negeri Unggulan</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">Presensi Digital Kelas Real-Time</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="badge badge-info" id="session-badge">Sesi Pagi (06:30 - 07:00)</span>
+        <span class="badge badge-success" id="sheets-badge">🟢 Google Sheets Sync Active</span>
+        <a href="index.html" class="btn btn-secondary" style="min-height: 38px; padding: 6px 14px; font-size: 0.85rem;">Portal</a>
+      </div>
+    </header>
+
+    <!-- Main Projector Hero Section -->
+    <main class="display-hero">
+      <div class="digital-clock" id="digital-clock">06:58:20</div>
+      <p style="color: var(--text-secondary); font-size: 1.15rem; margin-bottom: 20px;">
+        Arahkan kamera HP Anda ke QR di bawah ini untuk verifikasi sidik jari
+      </p>
+
+      <!-- Dynamic Rolling QR Frame with SVG Countdown Ring -->
+      <div class="qr-frame-wrapper">
+        <svg class="countdown-svg" viewBox="0 0 100 100">
+          <circle class="countdown-circle-bg" cx="50" cy="50" r="44"></circle>
+          <circle class="countdown-circle-fg" id="countdown-circle" cx="50" cy="50" r="44" stroke-dasharray="276.46" stroke-dashoffset="0"></circle>
+        </svg>
+
+        <div class="qr-image-container">
+          <img id="rolling-qr-img" src="" alt="Dynamic Rolling QR" style="display: none;">
+          <div id="qr-canvas-container" style="display: none;"></div>
+          <div id="qr-loading-spinner" style="color: #3b82f6; font-weight: 600;">Memuat QR Token...</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">
+        <span>⏳ QR otomatis berganti dalam: <strong id="countdown-text" style="color: var(--color-primary); font-variant-numeric: tabular-nums;">10s</strong></span>
+        <span>•</span>
+        <span>🛡️ Anti-Foto WhatsApp</span>
+      </div>
+
+      <!-- Live Attendance Stream Ticker -->
+      <div class="live-stream-ticker" id="live-stream-ticker">
+        <!-- Live scan cards will be prepended here -->
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/display.js"></script>
+</body>
+</html>

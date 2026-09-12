@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dashboard Guru & Admin - Presensi Siswa</title>
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background-color: var(--bg-app);">
+  <div class="app-container">
+    <!-- Admin Header -->
+    <header class="header-bar">
+      <div class="brand-badge">
+        <div class="brand-icon">📊</div>
+        <div>
+          <div>Dashboard Presensi Guru & Tata Usaha</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">Monitoring Real-Time & Manajemen Device</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button id="btn-refresh" class="btn btn-secondary" style="min-height: 40px; padding: 8px 16px; font-size: 0.85rem;">🔄 Refresh</button>
+        <a href="/api/export/csv" class="btn btn-primary" style="min-height: 40px; padding: 8px 16px; font-size: 0.85rem;">📥 Download Rekap CSV</a>
+        <a href="index.html" class="btn btn-secondary" style="min-height: 40px; padding: 8px 14px; font-size: 0.85rem;">Portal</a>
+      </div>
+    </header>
+
+    <main style="max-width: 1200px; width: 100%; margin: 24px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 24px;">
+
+      <!-- Google Sheets Connection Status Card -->
+      <div class="glass-card" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+              📈
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 1.05rem;">Google Spreadsheet Live Mirror</div>
+              <div id="sheets-details" style="color: var(--text-secondary); font-size: 0.85rem;">Status: Terhubung • Antrean: 0 record pending</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button id="btn-toggle-google-setup" class="btn btn-secondary" style="min-height: 38px; padding: 6px 14px; font-size: 0.85rem;">⚙️ Hubungkan Akun Google Saya</button>
+            <button id="btn-force-sync" class="btn btn-secondary" style="min-height: 38px; padding: 6px 14px; font-size: 0.85rem;">⚡ Force Sync Antrean</button>
+            <button id="btn-open-override-modal" class="btn btn-primary" style="min-height: 38px; padding: 6px 14px; font-size: 0.85rem;">+ Hadirkan Manual (HP Rusak)</button>
+          </div>
+        </div>
+
+        <!-- Collapsible Google Account Connection Box -->
+        <div id="box-google-setup" style="display: none; background: rgba(0,0,0,0.25); border-radius: var(--radius-md); padding: 18px; border: 1px solid var(--border-glass);">
+          <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; color: #fff;">🔗 Cara Menghubungkan ke Akun Google Anda:</div>
+          <ol style="margin-left: 20px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.6;">
+            <li>Buka <a href="https://sheets.new" target="_blank" style="color: var(--color-primary); text-decoration: underline;">Google Spreadsheet Baru</a> di akun Google Anda.</li>
+            <li>Klik menu <strong>Ekstensi</strong> &gt; <strong>Apps Script</strong>.</li>
+            <li>Hapus kode bawaan, lalu paste kode dari file <code>google-apps-script.gs</code> (<button id="btn-copy-script" style="background: none; border: none; color: var(--color-primary); text-decoration: underline; cursor: pointer; font-size: 0.85rem;">Salin Kode Script</button>).</li>
+            <li>Klik tombol <strong>Terapkan (Deploy)</strong> &gt; <strong>Deployment Baru</strong> &gt; Pilih Jenis: <strong>Aplikasi Web</strong> (Akses: <em>Siapa saja</em>) &gt; Klik Terapkan.</li>
+            <li>Salin URL Aplikasi Web yang diberikan Google, lalu paste di kolom bawah ini:</li>
+          </ol>
+
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="input-webhook-url" class="form-input" placeholder="https://script.google.com/macros/s/.../exec" style="flex: 1; min-height: 42px; margin-bottom: 0; font-size: 0.85rem;">
+            <button id="btn-save-webhook" class="btn btn-primary" style="min-height: 42px; padding: 6px 18px; font-size: 0.85rem;">Simpan URL</button>
+            <button id="btn-test-webhook" class="btn btn-secondary" style="min-height: 42px; padding: 6px 18px; font-size: 0.85rem;">🧪 Uji Kirim Baris</button>
+          </div>
+          <div id="webhook-feedback" style="margin-top: 10px; font-size: 0.85rem; display: none;"></div>
+        </div>
+      </div>
+
+      <!-- Stats Summary Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <div class="glass-card" style="text-align: center; padding: 20px;">
+          <div style="color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">TOTAL SISWA</div>
+          <div id="stat-total" style="font-size: 2.2rem; font-weight: 800;">-</div>
+        </div>
+        <div class="glass-card" style="text-align: center; padding: 20px; border-color: rgba(16, 185, 129, 0.3);">
+          <div style="color: var(--status-success); font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">HADIR TEPAT WAKTU</div>
+          <div id="stat-ontime" style="font-size: 2.2rem; font-weight: 800; color: var(--status-success);">-</div>
+        </div>
+        <div class="glass-card" style="text-align: center; padding: 20px; border-color: rgba(245, 158, 11, 0.3);">
+          <div style="color: var(--status-warning); font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">TERLAMBAT</div>
+          <div id="stat-late" style="font-size: 2.2rem; font-weight: 800; color: var(--status-warning);">-</div>
+        </div>
+        <div class="glass-card" style="text-align: center; padding: 20px; border-color: rgba(6, 182, 212, 0.3);">
+          <div style="color: var(--status-info); font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">OVERRIDE GURU</div>
+          <div id="stat-override" style="font-size: 2.2rem; font-weight: 800; color: var(--status-info);">-</div>
+        </div>
+        <div class="glass-card" style="text-align: center; padding: 20px;">
+          <div style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">BELUM PRESENSI</div>
+          <div id="stat-unrecorded" style="font-size: 2.2rem; font-weight: 800; color: var(--text-muted);">-</div>
+        </div>
+      </div>
+
+      <!-- Attendance Table Section -->
+      <div class="glass-card" style="padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
+          <h2 style="font-size: 1.25rem; font-weight: 800;">Daftar Presensi Hari Ini (<span id="current-date-label">Hari Ini</span>)</h2>
+          
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <input type="text" id="search-input" class="form-input" placeholder="Cari nama / NISN..." style="margin-bottom: 0; min-height: 40px; width: 220px; font-size: 0.9rem;">
+            
+            <select id="filter-class" class="form-input" style="margin-bottom: 0; min-height: 40px; width: 160px; font-size: 0.9rem;">
+              <option value="ALL">Semua Kelas</option>
+              <option value="XII-MIPA-1">XII-MIPA-1</option>
+              <option value="XII-MIPA-2">XII-MIPA-2</option>
+              <option value="XII-IPS-1">XII-IPS-1</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table Responsive Container -->
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-glass); color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase;">
+                <th style="padding: 12px 14px;">Waktu</th>
+                <th style="padding: 12px 14px;">NISN</th>
+                <th style="padding: 12px 14px;">Nama Siswa</th>
+                <th style="padding: 12px 14px;">Kelas</th>
+                <th style="padding: 12px 14px;">Status</th>
+                <th style="padding: 12px 14px;">Metode</th>
+                <th style="padding: 12px 14px;">Perangkat</th>
+                <th style="padding: 12px 14px; text-align: center;">Aksi Device</th>
+              </tr>
+            </thead>
+            <tbody id="attendance-tbody">
+              <tr>
+                <td colspan="8" style="padding: 24px; text-align: center; color: var(--text-muted);">Memuat data presensi...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Modal Manual Override -->
+    <div id="modal-override" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 100; align-items: center; justify-content: center; padding: 20px;">
+      <div class="glass-card" style="max-width: 460px; width: 100%; background: var(--bg-surface-elevated);">
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px;">Hadirkan Siswa Secara Manual</h3>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
+          Gunakan fitur ini jika smartphone siswa bermasalah (lowbat, rusak, atau tertinggal).
+        </p>
+
+        <form id="form-override" onsubmit="return false;">
+          <label style="display: block; font-size: 0.85rem; margin-bottom: 6px;">Pilih Siswa</label>
+          <select id="select-student-override" class="form-input" required style="margin-bottom: 14px;">
+            <option value="">-- Pilih Siswa --</option>
+          </select>
+
+          <label style="display: block; font-size: 0.85rem; margin-bottom: 6px;">Alasan Kehadiran Manual</label>
+          <select id="select-reason-override" class="form-input" style="margin-bottom: 20px;">
+            <option value="HP Rusak/Layar Pecah">HP Rusak / Layar Pecah</option>
+            <option value="HP Lowbat/Mati">HP Lowbat / Mati Total</option>
+            <option value="HP Tertinggal di Rumah">HP Tertinggal di Rumah</option>
+            <option value="Sensor Biometrik Error">Sensor Biometrik Error</option>
+            <option value="Dispensasi Guru">Dispensasi Guru Piket</option>
+          </select>
+
+          <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button type="button" id="btn-close-modal" class="btn btn-secondary">Batal</button>
+            <button type="submit" id="btn-save-override" class="btn btn-primary">Simpan Presensi</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
