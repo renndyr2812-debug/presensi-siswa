@@ -125,8 +125,8 @@ function handleGetQR_(e) {
 // ACTION: Lookup Student by NISN
 // ============================================================
 function handleLookupStudent_(e) {
-  var nisn = e.parameter.nisn;
-  if (!nisn) return jsonResponse_({ error: 'NISN wajib diisi' });
+  var nisn = e.parameter.nisn || e.parameter.nis;
+  if (!nisn) return jsonResponse_({ error: 'NIS/NISN wajib diisi', found: false });
 
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = getOrCreateSheet_(ss, CONFIG.SHEET_STUDENTS);
@@ -134,19 +134,28 @@ function handleLookupStudent_(e) {
 
   var data = sheet.getDataRange().getValues();
   var today = getTodayDate_();
+  var target = String(nisn).trim().toLowerCase();
 
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
-    if (String(row[1]).trim() === String(nisn).trim()) {
+    var colId = String(row[0]).trim().toLowerCase();
+    var colNisn = String(row[1]).split('.')[0].trim().toLowerCase();
+
+    if (colNisn === target || colId === target || colId === ('std-' + target)) {
       var student = rowToStudent_(row, i + 1);
 
       // Check today's attendance
       var attendanceToday = findAttendanceToday_(ss, student.id, today);
       student.attendanceToday = attendanceToday;
-      return jsonResponse_(student);
+      student.found = true;
+
+      // Return both flat object and nested student object for 100% compatibility
+      var responseObj = { found: true, student: student };
+      Object.keys(student).forEach(function(k) { responseObj[k] = student[k]; });
+      return jsonResponse_(responseObj);
     }
   }
-  return jsonResponse_({ error: 'NISN tidak terdaftar dalam database sekolah' });
+  return jsonResponse_({ error: 'Siswa dengan NIS ' + nisn + ' tidak terdaftar dalam database', found: false });
 }
 
 // ============================================================
