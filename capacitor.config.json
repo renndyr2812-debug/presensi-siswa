@@ -1,0 +1,8 @@
+{
+  "appId": "com.presensisiswa.cloud",
+  "appName": "Presensi Siswa",
+  "webDir": "public",
+  "server": {
+    "androidScheme": "https"
+  }
+}

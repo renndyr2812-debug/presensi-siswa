@@ -40,7 +40,15 @@ function jsonResponse_(data) {
 // ============================================================
 function doGet(e) {
   try {
-    var action = e.parameter.action || 'ping';
+    var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : null;
+
+    // Jika diakses tanpa parameter action (dibuka langsung dari browser / HP Android): tampilkan Web App UI
+    if (!action) {
+      return HtmlService.createHtmlOutput(renderAppHtml_())
+        .setTitle('Presensi Siswa Digital')
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    }
 
     if (action === 'ping')             return jsonResponse_({ ok: true, ts: Date.now() });
     if (action === 'getQR')            return handleGetQR_(e);

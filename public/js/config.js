@@ -12,7 +12,7 @@
  * 5. Ganti nilai APPS_SCRIPT_URL di bawah ini
  */
 
-const APPS_SCRIPT_URL = 'PASTE_URL_APPS_SCRIPT_ANDA_DI_SINI';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzD9_wb8KusYc4TLzlaoTAijO6oXtelTqMZic5aqnsbAO2pIIxfXsL1nOFPj1WwDJhpjA/exec';
 
 /**
  * apiFetch — wrapper untuk semua request ke Apps Script
