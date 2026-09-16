@@ -3,147 +3,243 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#080c14">
+  <meta name="theme-color" content="#070D18">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Presensi Siswa - PWA Mobile</title>
+  <title>Student Smart Pass — St. Cloud International Academy</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/design-tokens.css">
   <link rel="stylesheet" href="css/style.css">
-  <!-- Lightweight html5-qrcode scanner -->
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <!-- HTML5 QR Code Scanner -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 </head>
 <body>
   <div class="app-container">
-    <!-- Student Header Bar -->
-    <header class="header-bar">
-      <div class="brand-badge">
-        <div class="brand-icon">📱</div>
-        <div id="student-header-title">Presensi Siswa</div>
-      </div>
-      <div style="display: flex; gap: 8px;">
-        <button id="btn-logout" class="btn btn-secondary" style="min-height: 36px; padding: 6px 12px; font-size: 0.8rem; display: none;">Ganti NISN</button>
-        <a href="index.html" class="btn btn-secondary" style="min-height: 36px; padding: 6px 12px; font-size: 0.8rem;">Portal</a>
+    
+    <!-- ─── Academy Header Bar ───────────────────────────────── -->
+    <header class="academy-header">
+      <a href="index.html" class="academy-brand">
+        <div class="crest-icon-box">
+          <!-- Academic Crest SVG -->
+          <svg class="crest-svg" viewBox="0 0 24 24">
+            <path d="M12 2L4 5V11C4 16.55 7.42 21.74 12 23C16.58 21.74 20 16.55 20 11V5L12 2ZM12 6.5C13.93 6.5 15.5 8.07 15.5 10C15.5 11.58 14.47 12.91 13.06 13.36L14 17H10L10.94 13.36C9.53 12.91 8.5 11.58 8.5 10C8.5 8.07 10.07 6.5 12 6.5Z"/>
+          </svg>
+        </div>
+        <div class="academy-title-group">
+          <span class="academy-name">St. Cloud Academy</span>
+          <span class="academy-motto">Veritas • Virtus • Excellentia</span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <div class="header-status-pill">
+          <span class="pulse-dot"></span>
+          <span>GATEWAY LIVE</span>
+        </div>
+        <button id="btn-logout" class="btn btn-secondary" style="min-height: 36px; padding: 6px 12px; font-size: 0.78rem; display: none;">
+          Sign Out
+        </button>
       </div>
     </header>
 
-    <!-- Student App Body Container (Thumb Zone Optimized) -->
+    <!-- ─── Main Student Viewport Container ───────────────────── -->
     <main class="student-view-container">
-      
-      <!-- STATE 1: NISN Identification & Initial Device Registration -->
-      <section id="state-login" class="glass-card" style="margin-top: auto; margin-bottom: auto;">
-        <div style="text-align: center; margin-bottom: 24px;">
-          <div style="width: 56px; height: 56px; border-radius: 14px; background: rgba(59, 130, 246, 0.15); color: #3b82f6; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 1.8rem;">
-            👤
+
+      <!-- STATE 1: Student NISN Identification & Fast Access -->
+      <section id="state-login" class="academy-card" style="margin-top: auto; margin-bottom: auto;">
+        <div style="text-align: center; margin-bottom: 22px;">
+          <div style="width: 54px; height: 54px; border-radius: 50%; background: rgba(212, 175, 55, 0.12); border: 1.5px solid var(--color-gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+            <svg style="width: 28px; height: 28px; fill: var(--color-gold);" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
           </div>
-          <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">Identitas Siswa</h2>
-          <p style="color: var(--text-secondary); font-size: 0.9rem;">
-            Masukkan NISN untuk membuka pemindai presensi
+          <h1 style="font-size: 1.35rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 4px;">
+            Student Access Pass
+          </h1>
+          <p style="color: var(--text-secondary); font-size: 0.88rem;">
+            Enter your Student ID (NISN) to initialize attendance check-in.
           </p>
+        </div>
+
+        <!-- Quick 1-Tap Student Chips for Instant Testing -->
+        <div class="chips-label">Quick Student Profile:</div>
+        <div class="student-chips-group">
+          <button type="button" class="student-chip" onclick="selectDemoNisn('1001')">
+            <span class="chip-avatar">AF</span>
+            <span>1001 • Ahmad Fauzi</span>
+          </button>
+          <button type="button" class="student-chip" onclick="selectDemoNisn('1002')">
+            <span class="chip-avatar">SR</span>
+            <span>1002 • Siti Rahma</span>
+          </button>
+          <button type="button" class="student-chip" onclick="selectDemoNisn('1003')">
+            <span class="chip-avatar">BS</span>
+            <span>1003 • Budi Santoso</span>
+          </button>
         </div>
 
         <form id="form-nisn" onsubmit="return false;">
-          <label for="input-nisn" style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">NOMOR INDUK SISWA NASIONAL (NISN)</label>
-          <input type="text" id="input-nisn" class="form-input" inputmode="numeric" pattern="[0-9]*" placeholder="Contoh: 1001" required autocomplete="off">
-          
-          <div id="login-error" style="color: var(--status-danger); font-size: 0.85rem; margin-bottom: 12px; display: none;"></div>
+          <div class="form-group">
+            <label for="input-nisn" class="form-label">Student Identification Number (NISN)</label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="input-nisn" 
+                class="form-input" 
+                inputmode="numeric" 
+                pattern="[0-9]*" 
+                placeholder="e.g. 1001" 
+                required 
+                autocomplete="off"
+              >
+            </div>
+          </div>
 
-          <button type="submit" id="btn-submit-nisn" class="btn btn-primary" style="width: 100%;">
-            Lanjutkan Identifikasi →
+          <!-- Error Alert Banner -->
+          <div id="login-error" style="display: none; background: var(--status-danger-bg); border: 1px solid var(--status-danger-border); color: #FFA4A4; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 14px; display: none;"></div>
+
+          <button type="submit" id="btn-submit-nisn" class="btn btn-gold" style="width: 100%;">
+            <span id="btn-submit-text">Verify Student ID →</span>
+            <span id="btn-submit-spinner" style="display: none;">Verifying ID...</span>
           </button>
         </form>
 
-        <div style="margin-top: 20px; text-align: center; font-size: 0.8rem; color: var(--text-muted);">
-          Demo NISN: <code>1001</code> (Ahmad), <code>1002</code> (Budi), <code>1003</code> (Citra)
+        <div style="margin-top: 20px; text-align: center; font-size: 0.76rem; color: var(--text-muted);">
+          Protected by St. Cloud Security Gateway • Live Sheets Connected
         </div>
       </section>
 
-      <!-- STATE 1B: Device Biometric Binding Prompt (First-time user) -->
-      <section id="state-bind" class="glass-card" style="display: none; margin-top: auto; margin-bottom: auto; text-align: center;">
-        <div style="width: 68px; height: 68px; border-radius: 50%; background: var(--status-info-bg); color: var(--status-info); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 2.2rem;">
-          👆
+      <!-- STATE 1B: Device Biometric Enrollment (WebAuthn / Device Key) -->
+      <section id="state-bind" class="academy-card" style="display: none; margin-top: auto; margin-bottom: auto; text-align: center;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(2, 132, 199, 0.15); border: 1.5px solid var(--status-info); color: var(--status-info); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+          <svg style="width: 32px; height: 32px; fill: currentColor;" viewBox="0 0 24 24">
+            <path d="M17.81 4.47c-.08 0-.16-.02-.23-.06C15.66 3.42 14 3 12.01 3c-1.98 0-3.86.47-5.57 1.41-.24.13-.54.04-.68-.2-.13-.24-.04-.55.2-.68C7.82 2.52 9.86 2 12.01 2c2.13 0 3.99.47 5.92 1.51.24.13.33.44.2.68-.09.18-.28.28-.48.28zM3.5 9.72c-.1 0-.2-.03-.29-.09-.23-.16-.28-.47-.12-.7.99-1.4 2.25-2.5 3.75-3.27.25-.13.55-.02.67.22.12.24.02.55-.22.67-1.39.72-2.56 1.73-3.48 3.03-.07.09-.19.14-.31.14zm16.92 0c-.12 0-.24-.05-.31-.14-.92-1.3-2.09-2.31-3.48-3.03-.24-.13-.34-.43-.22-.67.13-.24.43-.34.67-.22 1.5.77 2.76 1.87 3.75 3.27.16.24.1.55-.12.7-.08.06-.18.09-.29.09zM12 5.5c-3.31 0-6 2.69-6 6 0 2.97 2.16 5.43 5 5.91V20H9v2h6v-2h-2v-2.59c2.84-.48 5-2.94 5-5.91 0-3.31-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+          </svg>
         </div>
-        <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 8px;">Daftarkan Sidik Jari HP</h2>
-        <p id="bind-student-desc" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">
-          HP ini akan dikaitkan dengan akun Anda untuk mencegah jastip absen.
+        <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 6px;">
+          Device Security Authorization
+        </h2>
+        <p id="bind-student-desc" style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 20px;">
+          Pair your smartphone hardware security key to lock your student account against proxy attendance.
         </p>
 
-        <div style="background: rgba(255,255,255,0.04); border-radius: var(--radius-md); padding: 14px; margin-bottom: 20px; font-size: 0.85rem; text-align: left; color: var(--text-secondary);">
-          <div>📱 <strong>Perangkat:</strong> <span id="bind-device-name">Mendeteksi...</span></div>
-          <div>🛡️ <strong>Keamanan:</strong> WebAuthn Hardware Keystore</div>
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 22px; text-align: left; font-size: 0.84rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span style="color: var(--text-secondary);">Detected Hardware:</span>
+            <strong id="bind-device-name" style="color: var(--text-primary);">Detecting...</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-secondary);">Security Protocol:</span>
+            <strong style="color: var(--color-gold);">WebAuthn Hardware Credential</strong>
+          </div>
         </div>
 
-        <button id="btn-bind-biometric" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
-          Aktifkan Biometrik di HP Ini
+        <button id="btn-bind-biometric" class="btn btn-gold" style="width: 100%;">
+          Authorize This Smartphone Device
         </button>
       </section>
 
-      <!-- STATE 2: Daily Scanner in Thumb Zone (Bottom 60%) -->
+      <!-- STATE 2: Thumb Zone QR Scanner -->
       <section id="state-scanner" style="display: none; flex-direction: column; height: 100%; justify-content: space-between;">
         
-        <!-- Top Student Header Card -->
-        <div class="glass-card" style="padding: 16px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-          <div>
-            <div id="student-name-display" style="font-weight: 800; font-size: 1.1rem;">Nama Siswa</div>
-            <div id="student-meta-display" style="color: var(--text-secondary); font-size: 0.85rem;">NISN • Kelas</div>
+        <!-- Official Student ID Profile Header Card -->
+        <div class="student-id-card">
+          <div class="student-profile-info">
+            <div class="student-avatar-ring">
+              <div class="student-avatar-inner" id="student-avatar-initials">AF</div>
+            </div>
+            <div>
+              <div class="student-meta-title" id="student-name-display">Ahmad Fauzi</div>
+              <div class="student-meta-sub">
+                <span id="student-id-display">#1001</span>
+                <span>•</span>
+                <span id="student-class-display">Grade 10 - Science 1</span>
+              </div>
+            </div>
           </div>
-          <span class="badge badge-success">HP Terverifikasi</span>
+          <div class="header-status-pill" style="margin-top: 10px;">
+            <span class="pulse-dot"></span>
+            <span>VERIFIED</span>
+          </div>
         </div>
 
-        <!-- Viewfinder in Thumb Reachable Area -->
-        <div style="margin: auto 0; text-align: center;">
+        <!-- Viewfinder Box in Ergonomic Reach Zone -->
+        <div class="viewfinder-wrapper">
           <div class="viewfinder-card">
-            <div id="qr-reader" style="width: 100%; height: 100%;"></div>
+            <!-- Reticle Corners -->
+            <div class="reticle-corner reticle-top-left"></div>
+            <div class="reticle-corner reticle-top-right"></div>
+            <div class="reticle-corner reticle-bottom-left"></div>
+            <div class="reticle-corner reticle-bottom-right"></div>
+            
+            <!-- Laser Animation -->
             <div class="scan-laser"></div>
+
+            <!-- Video Camera Stream Container -->
+            <div id="qr-reader" style="width: 100%; height: 100%;"></div>
           </div>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">
-            Arahkan kamera ke QR di layar proyektor
+
+          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;">
+            Align the Classroom Projector QR Code within frame
           </p>
         </div>
 
-        <!-- Bottom Action Controls -->
-        <div style="margin-top: auto; padding-bottom: 16px;">
-          <div id="scan-status-alert" style="display: none; padding: 12px; border-radius: var(--radius-md); margin-bottom: 12px; font-size: 0.9rem; text-align: center;"></div>
-          
-          <button id="btn-manual-token-toggle" class="btn btn-secondary" style="width: 100%; font-size: 0.9rem;">
-            ⌨️ Masukkan Token Manual (Jika Kamera Bermasalah)
+        <!-- Bottom Thumb Action Controls -->
+        <div style="margin-top: auto; padding-bottom: 12px;">
+          <div id="scan-status-alert" style="display: none; padding: 12px; border-radius: var(--radius-md); margin-bottom: 12px; font-size: 0.88rem; text-align: center; font-weight: 600;"></div>
+
+          <button id="btn-manual-token-toggle" class="btn btn-secondary" style="width: 100%; font-size: 0.88rem; min-height: 46px;">
+            ⌨️ Manual Token Override (Camera Fallback)
           </button>
 
-          <!-- Hidden Manual Input Drawer -->
-          <div id="manual-token-drawer" style="display: none; margin-top: 12px;" class="glass-card">
-            <label style="display: block; font-size: 0.8rem; margin-bottom: 4px; color: var(--text-secondary);">TOKEN HASH DARI LAYAR</label>
-            <input type="text" id="input-manual-token" class="form-input" placeholder="Paste / ketik token" style="margin-bottom: 10px;">
-            <button id="btn-submit-manual-token" class="btn btn-primary" style="width: 100%;">Verifikasi Kehadiran</button>
+          <!-- Collapsible Manual Input Drawer -->
+          <div id="manual-token-drawer" style="display: none; margin-top: 10px;" class="academy-card">
+            <label class="form-label">ROLLING TOKEN HASH FROM SCREEN</label>
+            <input type="text" id="input-manual-token" class="form-input" placeholder="Type or paste token hash" style="margin-bottom: 10px; font-size: 1rem;">
+            <button id="btn-submit-manual-token" class="btn btn-gold" style="width: 100%; min-height: 48px;">
+              Verify Attendance Now
+            </button>
           </div>
         </div>
       </section>
 
-      <!-- STATE 3: Digital Attendance Pass Ticket (Confirmation View) -->
+      <!-- STATE 3: Official Attendance Confirmation Pass -->
       <section id="state-ticket" style="display: none; margin: auto 0;">
-        <div class="ticket-card">
-          <div class="ticket-check-icon">✓</div>
-          <span id="ticket-badge" class="badge badge-success" style="font-size: 0.9rem; padding: 6px 16px; margin-bottom: 16px;">HADIR TEPAT WAKTU</span>
-          
-          <h2 id="ticket-student-name" style="font-size: 1.45rem; font-weight: 800; margin-bottom: 4px;">Ahmad Dahlan</h2>
-          <div id="ticket-student-meta" style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">NISN: 1001 • Kelas: XII-MIPA-1</div>
-
-          <div style="background: rgba(255, 255, 255, 0.04); border-radius: var(--radius-md); padding: 16px; text-align: left; font-size: 0.9rem; margin-bottom: 24px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-              <span style="color: var(--text-secondary);">Waktu Presensi:</span>
-              <strong id="ticket-timestamp" style="font-variant-numeric: tabular-nums;">06:58:22 WIB</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-              <span style="color: var(--text-secondary);">Metode Verifikasi:</span>
-              <strong id="ticket-method" style="color: var(--color-primary);">Biometrik Sidik Jari HP</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between;">
-              <span style="color: var(--text-secondary);">Status Google Sheets:</span>
-              <span style="color: var(--status-success);">✓ Tersinkronisasi</span>
-            </div>
+        <div class="ticket-pass">
+          <div class="ticket-pass-ribbon">
+            St. Cloud International Academy • Official Attendance Record
           </div>
+          
+          <div class="ticket-pass-body">
+            <div class="ticket-seal-badge">✓</div>
+            <span id="ticket-badge" class="header-status-pill" style="font-size: 0.82rem; padding: 6px 16px; margin-bottom: 12px;">
+              RECORDED: ON-TIME
+            </span>
 
-          <div style="display: flex; gap: 10px;">
-            <button id="btn-done" class="btn btn-primary" style="flex: 1;">Tutup / Selesai</button>
+            <h2 id="ticket-student-name" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 4px;">
+              Ahmad Fauzi
+            </h2>
+            <div id="ticket-student-meta" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px;">
+              NISN: 1001 • Grade 10 - Science 1
+            </div>
+
+            <div class="ticket-meta-box">
+              <div class="ticket-row">
+                <span class="ticket-label">Timestamp:</span>
+                <span class="ticket-val" id="ticket-timestamp">06:58:22 WIB</span>
+              </div>
+              <div class="ticket-row">
+                <span class="ticket-label">Verification Type:</span>
+                <span class="ticket-val" style="color: var(--color-gold);" id="ticket-method">Hardware Biometric + Rolling QR</span>
+              </div>
+              <div class="ticket-row">
+                <span class="ticket-label">Spreadsheet Sync:</span>
+                <span class="ticket-val" style="color: var(--status-success);">✓ Live Mirrored</span>
+              </div>
+            </div>
+
+            <button id="btn-done" class="btn btn-gold" style="width: 100%;">
+              Complete & Sign Out
+            </button>
           </div>
         </div>
       </section>
@@ -151,7 +247,6 @@
     </main>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
   <script src="js/config.js"></script>
   <script src="js/audio-haptics.js"></script>
   <script src="js/student.js"></script>

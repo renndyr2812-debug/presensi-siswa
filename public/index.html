@@ -3,39 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Sistem Absensi Siswa Cloud</title>
+  <meta name="theme-color" content="#070D18">
+  <title>St. Cloud International Academy — Digital Campus Gateway</title>
   <link rel="stylesheet" href="css/design-tokens.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="app-container" style="justify-content: center; align-items: center; padding: 24px;">
-    <div class="glass-card" style="max-width: 520px; width: 100%; text-align: center;">
-      <div style="width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg, #3b82f6, #06b6d4); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #fff; font-size: 2rem; font-weight: 800;">
-        A
+  <div class="app-container" style="justify-content: center; align-items: center; padding: 24px 16px;">
+    
+    <div class="academy-card" style="max-width: 480px; width: 100%; text-align: center; padding: 32px 24px;">
+      
+      <!-- Academy Crest Icon Box -->
+      <div class="crest-icon-box" style="width: 60px; height: 60px; margin: 0 auto 16px; border-radius: var(--radius-md);">
+        <svg class="crest-svg" style="width: 36px; height: 36px;" viewBox="0 0 24 24">
+          <path d="M12 2L4 5V11C4 16.55 7.42 21.74 12 23C16.58 21.74 20 16.55 20 11V5L12 2ZM12 6.5C13.93 6.5 15.5 8.07 15.5 10C15.5 11.58 14.47 12.91 13.06 13.36L14 17H10L10.94 13.36C9.53 12.91 8.5 11.58 8.5 10C8.5 8.07 10.07 6.5 12 6.5Z"/>
+        </svg>
       </div>
-      <h1 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Presensi Siswa Cloud</h1>
-      <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem;">
-        Sistem absensi mandiri berbasis Dynamic Rolling QR & Sidik Jari Handphone dengan sinkronisasi Google Spreadsheet.
+
+      <!-- Academy Title & Motto -->
+      <div style="font-family: var(--font-serif); font-size: 0.78rem; letter-spacing: 0.16em; color: var(--text-gold); text-transform: uppercase; font-weight: 700; margin-bottom: 4px;">
+        Veritas • Virtus • Excellentia
+      </div>
+      <h1 style="font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px;">
+        St. Cloud Academy
+      </h1>
+      <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.9rem; line-height: 1.5;">
+        Digital Campus Attendance Gateway • Zero-Loophole Dynamic QR & Hardware Biometric Verification
       </p>
 
-      <div style="display: flex; flex-direction: column; gap: 14px;">
-        <a href="display.html" class="btn btn-primary" style="font-size: 1.05rem; padding: 16px;">
-          🖥️ Buka Layar Proyektor Kelas (/display)
+      <!-- Portal Navigation Cards -->
+      <div class="portal-grid">
+        
+        <!-- 1. Student Smart Pass (Featured for Mobile App) -->
+        <a href="student.html" class="portal-nav-card featured">
+          <div style="display: flex; align-items: center; gap: 14px; text-align: left;">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: var(--gradient-gold); color: #070D18; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+              📱
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 1.05rem; color: var(--text-primary);">
+                Student Smart Pass
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-gold);">
+                Mobile attendance check-in & biometric scan
+              </div>
+            </div>
+          </div>
+          <span style="font-size: 1.2rem; color: var(--color-gold);">→</span>
         </a>
-        <a href="student.html" class="btn btn-secondary" style="font-size: 1.05rem; padding: 16px;">
-          📱 Buka Aplikasi Siswa PWA (/student)
+
+        <!-- 2. Classroom Projector Display Screen -->
+        <a href="display.html" class="portal-nav-card">
+          <div style="display: flex; align-items: center; gap: 14px; text-align: left;">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+              🖥️
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 1rem; color: var(--text-primary);">
+                Classroom Display
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                Dynamic Rolling QR for projectors & TVs
+              </div>
+            </div>
+          </div>
+          <span style="font-size: 1.1rem; color: var(--text-secondary);">→</span>
         </a>
-        <a href="admin.html" class="btn btn-secondary" style="font-size: 1.05rem; padding: 16px;">
-          📊 Buka Dashboard Guru / Admin (/admin)
+
+        <!-- 3. Faculty & Administration Register -->
+        <a href="admin.html" class="portal-nav-card">
+          <div style="display: flex; align-items: center; gap: 14px; text-align: left;">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+              📊
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 1rem; color: var(--text-primary);">
+                Faculty Register
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                Attendance analytics & device management
+              </div>
+            </div>
+          </div>
+          <span style="font-size: 1.1rem; color: var(--text-secondary);">→</span>
         </a>
+
       </div>
 
-      <div style="margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-around; font-size: 0.85rem; color: var(--text-muted);">
-        <span>⚡ Zero Hardware Cost</span>
-        <span>🛡️ Anti-Loophole</span>
-        <span>📊 Live Sheets Mirror</span>
+      <!-- Footer Badges -->
+      <div style="margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-around; font-size: 0.76rem; color: var(--text-muted);">
+        <span>🛡️ Hardware Biometrics</span>
+        <span>•</span>
+        <span>⚡ Anti-Proxy</span>
+        <span>•</span>
+        <span>📊 Google Sheets Live</span>
       </div>
+
     </div>
   </div>
+
+  <script>
+    // Auto-direct to student.html if opened inside Capacitor native Android APK wrapper
+    if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
+      window.location.replace('student.html');
+    }
+  </script>
 </body>
 </html>

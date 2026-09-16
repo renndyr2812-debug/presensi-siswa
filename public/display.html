@@ -3,35 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Layar Presensi Kelas - Dynamic QR Proyektor</title>
+  <meta name="theme-color" content="#070D18">
+  <title>Classroom Dynamic QR Display — St. Cloud International Academy</title>
   <link rel="stylesheet" href="css/design-tokens.css">
   <link rel="stylesheet" href="css/style.css">
   <!-- QR Code Client-Side Generator -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
-<body style="background: radial-gradient(circle at center, #111827 0%, #030712 100%);">
+<body style="background: radial-gradient(circle at 50% 30%, #0F1D38 0%, #060B14 100%);">
   <div class="app-container">
-    <!-- Header Bar -->
-    <header class="header-bar">
-      <div class="brand-badge">
-        <div class="brand-icon">QR</div>
-        <div>
-          <div>SMA Negeri Unggulan</div>
-          <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">Presensi Digital Kelas Real-Time</div>
+    
+    <!-- Academy Header Bar -->
+    <header class="academy-header">
+      <a href="index.html" class="academy-brand">
+        <div class="crest-icon-box">
+          <svg class="crest-svg" viewBox="0 0 24 24">
+            <path d="M12 2L4 5V11C4 16.55 7.42 21.74 12 23C16.58 21.74 20 16.55 20 11V5L12 2ZM12 6.5C13.93 6.5 15.5 8.07 15.5 10C15.5 11.58 14.47 12.91 13.06 13.36L14 17H10L10.94 13.36C9.53 12.91 8.5 11.58 8.5 10C8.5 8.07 10.07 6.5 12 6.5Z"/>
+          </svg>
         </div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <span class="badge badge-info" id="session-badge">Sesi Pagi (06:30 - 07:00)</span>
-        <span class="badge badge-success" id="sheets-badge">🟢 Google Sheets Sync Active</span>
-        <a href="index.html" class="btn btn-secondary" style="min-height: 38px; padding: 6px 14px; font-size: 0.85rem;">Portal</a>
+        <div class="academy-title-group">
+          <span class="academy-name">St. Cloud International Academy</span>
+          <span class="academy-motto">Classroom Real-Time Attendance Register</span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <span class="header-status-pill" id="session-badge" style="background: rgba(212, 175, 55, 0.12); color: var(--color-gold); border-color: rgba(212, 175, 55, 0.3);">
+          MORNING SESSION (06:30 - 07:00)
+        </span>
+        <div class="header-status-pill">
+          <span class="pulse-dot"></span>
+          <span>SHEETS SYNC LIVE</span>
+        </div>
+        <a href="index.html" class="btn btn-secondary" style="min-height: 36px; padding: 6px 14px; font-size: 0.8rem;">Portal</a>
       </div>
     </header>
 
     <!-- Main Projector Hero Section -->
     <main class="display-hero">
       <div class="digital-clock" id="digital-clock">06:58:20</div>
-      <p style="color: var(--text-secondary); font-size: 1.15rem; margin-bottom: 20px;">
-        Arahkan kamera HP Anda ke QR di bawah ini untuk verifikasi sidik jari
+      <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 20px;">
+        Point your smartphone camera at the Dynamic QR code to log attendance
       </p>
 
       <!-- Dynamic Rolling QR Frame with SVG Countdown Ring -->
@@ -44,24 +55,28 @@
         <div class="qr-image-container">
           <img id="rolling-qr-img" src="" alt="Dynamic Rolling QR" style="display: none;">
           <div id="qr-canvas-container" style="display: none;"></div>
-          <div id="qr-loading-spinner" style="color: #3b82f6; font-weight: 600;">Memuat QR Token...</div>
+          <div id="qr-loading-spinner" style="color: var(--color-gold); font-weight: 700; font-size: 0.95rem;">
+            Generating Secure Token...
+          </div>
         </div>
       </div>
 
       <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">
-        <span>⏳ QR otomatis berganti dalam: <strong id="countdown-text" style="color: var(--color-primary); font-variant-numeric: tabular-nums;">10s</strong></span>
+        <span>⏳ Code rotates in: <strong id="countdown-text" style="color: var(--color-gold); font-variant-numeric: tabular-nums;">10s</strong></span>
         <span>•</span>
-        <span>🛡️ Anti-Foto WhatsApp</span>
+        <span>🛡️ Anti-Proxy Screenshot Protected</span>
       </div>
 
       <!-- Live Attendance Stream Ticker -->
       <div class="live-stream-ticker" id="live-stream-ticker">
-        <!-- Live scan cards will be prepended here -->
+        <!-- Live attendance cards prepended dynamically -->
       </div>
     </main>
+
   </div>
 
   <script src="js/config.js"></script>
+  <script src="js/audio-haptics.js"></script>
   <script src="js/display.js"></script>
 </body>
 </html>

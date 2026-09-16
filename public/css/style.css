@@ -1,4 +1,9 @@
-/* Global Reset & Base Styles */
+/* ============================================================
+   ACADEMIA GLOBAL — International School Attendance System
+   Mobile UI/UX Pro Max & Elite Academic Institution Standards
+   ============================================================ */
+
+/* ─── 1. Reset & Foundations ─────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -8,10 +13,10 @@
 
 html, body {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background-color: var(--bg-app);
   color: var(--text-primary);
-  font-family: var(--font-family);
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.5;
   overflow-x: hidden;
@@ -19,88 +24,297 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Base App Shell */
+/* Base App Shell with Safe Area Ergonomics */
 .app-container {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   padding-top: var(--safe-top);
   padding-bottom: var(--safe-bottom);
   padding-left: var(--safe-left);
   padding-right: var(--safe-right);
+  position: relative;
+  background: radial-gradient(circle at 50% 0%, rgba(29, 78, 216, 0.12) 0%, transparent 60%),
+              radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+              var(--bg-app);
 }
 
-/* Glassmorphism Card System */
-.glass-card {
-  background: var(--bg-surface-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 24px;
-}
-
-/* Header & Nav */
-.header-bar {
+/* ─── 2. Academy Header & Crest ───────────────────────────────── */
+.academy-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 14px 20px;
   background: var(--bg-surface-glass);
   border-bottom: 1px solid var(--border-subtle);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: sticky;
   top: 0;
   z-index: 50;
 }
 
-.brand-badge {
-  display: inline-flex;
+.academy-brand {
+  display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: -0.02em;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
 }
 
-.brand-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+.crest-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-card);
+  border: 1px solid var(--border-glass);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  font-weight: 900;
+  box-shadow: var(--shadow-sm);
 }
 
-/* Buttons & Touch Targets (Min 48px) */
+.crest-svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--color-gold);
+}
+
+.academy-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.academy-name {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.academy-motto {
+  font-family: var(--font-serif);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--text-gold);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--status-success);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  letter-spacing: 0.03em;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--status-success);
+  box-shadow: 0 0 8px var(--status-success);
+  animation: pulse-dot-anim 2s infinite;
+}
+
+@keyframes pulse-dot-anim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ─── 3. Cards & Surfaces ─────────────────────────────────────── */
+.academy-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(229, 192, 123, 0.25);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.academy-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-gold);
+  opacity: 0.85;
+}
+
+/* ─── 4. Student View Container & Ergonomics ─────────────────── */
+.student-view-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ─── 5. Form Elements (Thumb Zone Optimized) ─────────────────── */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input {
+  width: 100%;
+  min-height: var(--btn-height);
+  background: var(--bg-surface-elevated);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+  background: var(--bg-surface);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 0.95rem;
+}
+
+/* Quick Student Selector Chips (Instant 1-Tap Testing) */
+.chips-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.student-chips-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.student-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+}
+
+.student-chip:active, .student-chip:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--color-gold);
+  color: var(--text-gold);
+  transform: translateY(-1px);
+}
+
+.chip-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: #0B132B;
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── 6. Buttons (Min 48px Touch Target) ─────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: var(--touch-target-min);
+  gap: 10px;
+  min-height: var(--btn-height);
   padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.98rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
   border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
+  position: relative;
+  letter-spacing: 0.01em;
 }
 
 .btn:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
+}
+
+.btn-gold {
+  background: var(--gradient-gold);
+  color: #070D18;
+  font-weight: 800;
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-gold:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 10px 28px rgba(212, 175, 55, 0.35);
 }
 
 .btn-primary {
   background: var(--color-primary);
-  color: #ffffff;
-  box-shadow: 0 4px 14px var(--color-primary-glow);
+  color: #FFFFFF;
+  box-shadow: 0 6px 20px var(--color-primary-glow);
 }
 
 .btn-primary:hover {
@@ -110,73 +324,278 @@ html, body {
 .btn-secondary {
   background: var(--bg-surface-elevated);
   color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-glass);
+}
+
+.btn-outline-gold {
+  background: transparent;
+  color: var(--text-gold);
+  border: 1.5px solid var(--color-gold);
+}
+
+.btn-outline-gold:hover {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+/* ─── 7. Digital Student ID Card Header (Scanner View) ───────── */
+.student-id-card {
+  background: linear-gradient(135deg, #172445 0%, #0D162C 100%);
   border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
 }
 
-.btn-danger {
-  background: var(--status-danger-bg);
-  color: var(--status-danger);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+.student-id-card::after {
+  content: 'OFFICIAL STUDENT PASS';
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  font-size: 0.58rem;
+  font-family: var(--font-serif);
+  letter-spacing: 0.15em;
+  color: var(--text-gold);
+  opacity: 0.7;
 }
 
-/* Status Badges */
-.badge {
-  display: inline-flex;
+.student-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.student-avatar-ring {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--gradient-gold);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.student-avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #0B132B;
+  color: var(--text-gold);
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.student-meta-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.student-meta-sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+  display: flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  border-radius: var(--radius-pill);
+}
+
+/* ─── 8. Viewfinder & Reticle (Thumb Reach Area) ─────────────── */
+.viewfinder-wrapper {
+  margin: auto 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.viewfinder-card {
+  width: 270px;
+  height: 270px;
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  background: #000000;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gold Reticle Corner Brackets */
+.reticle-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--color-gold);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.reticle-top-left {
+  top: 14px;
+  left: 14px;
+  border-width: 3px 0 0 3px;
+  border-top-left-radius: 6px;
+}
+
+.reticle-top-right {
+  top: 14px;
+  right: 14px;
+  border-width: 3px 3px 0 0;
+  border-top-right-radius: 6px;
+}
+
+.reticle-bottom-left {
+  bottom: 14px;
+  left: 14px;
+  border-width: 0 0 3px 3px;
+  border-bottom-left-radius: 6px;
+}
+
+.reticle-bottom-right {
+  bottom: 14px;
+  right: 14px;
+  border-width: 0 3px 3px 0;
+  border-bottom-right-radius: 6px;
+}
+
+/* Gold Laser Scan Line */
+.scan-laser {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-gold) 50%, transparent 100%);
+  box-shadow: var(--shadow-laser);
+  z-index: 5;
+  animation: laser-anim 2.4s infinite cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+@keyframes laser-anim {
+  0% { top: 12%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 88%; opacity: 0; }
+}
+
+/* ─── 9. Attendance Confirmation Pass (Boarding Pass Style) ──── */
+.ticket-pass {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.ticket-pass-ribbon {
+  background: var(--gradient-gold);
+  color: #070D18;
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-align: center;
+  padding: 8px 16px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
-.badge-success {
-  background: var(--status-success-bg);
+.ticket-pass-body {
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.ticket-seal-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.12);
+  border: 2px solid var(--status-success);
   color: var(--status-success);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 2.2rem;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.25);
 }
 
-.badge-warning {
-  background: var(--status-warning-bg);
-  color: var(--status-warning);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+.ticket-meta-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin: 20px 0;
+  text-align: left;
+  font-size: 0.88rem;
 }
 
-.badge-info {
-  background: var(--status-info-bg);
-  color: var(--status-info);
-  border: 1px solid rgba(6, 182, 212, 0.3);
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
 }
 
-/* --- Display View Styles (Projector Fullscreen) --- */
+.ticket-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ticket-label {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.ticket-val {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── 10. Display Page (Projector / TV Classroom Screen) ──────── */
 .display-hero {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 24px;
+  padding: 24px;
   text-align: center;
 }
 
 .digital-clock {
-  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-size: clamp(2.6rem, 7vw, 4.8rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1;
   margin-bottom: 8px;
-  background: linear-gradient(180deg, #ffffff, #94a3b8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .qr-frame-wrapper {
   position: relative;
-  width: 380px;
-  height: 380px;
-  margin: 20px auto;
+  width: 290px;
+  height: 290px;
+  margin: 20px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -193,168 +612,154 @@ html, body {
 }
 
 .countdown-circle-bg {
-  stroke: rgba(255, 255, 255, 0.1);
   fill: none;
-  stroke-width: 6;
+  stroke: rgba(255, 255, 255, 0.07);
+  stroke-width: 4;
 }
 
 .countdown-circle-fg {
-  stroke: var(--color-primary);
   fill: none;
-  stroke-width: 6;
+  stroke: var(--color-gold);
+  stroke-width: 4;
   stroke-linecap: round;
-  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+  transition: stroke-dashoffset 1s linear;
 }
 
 .qr-image-container {
-  width: 320px;
-  height: 320px;
-  background: #ffffff;
-  padding: 12px;
+  width: 250px;
+  height: 250px;
+  background: #FFFFFF;
   border-radius: var(--radius-lg);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
 }
 
-.qr-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.qr-image-container img, .qr-image-container canvas {
+  width: 100% !important;
+  height: 100% !important;
   border-radius: var(--radius-sm);
-  transition: opacity 0.2s ease;
 }
 
-/* Live Attendance Stream Ticker */
+/* Live Stream Attendee Ticker */
 .live-stream-ticker {
-  width: 100%;
-  max-width: 800px;
-  margin-top: 30px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  overflow-x: auto;
+  max-width: 90vw;
+  padding: 12px 4px;
+  margin-top: 24px;
+  scrollbar-width: none;
 }
 
-.ticker-item {
+.live-stream-ticker::-webkit-scrollbar {
+  display: none;
+}
+
+.live-ticker-item {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: item-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes item-appear {
+  0% { opacity: 0; transform: translateY(12px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── 11. Portal Index Navigation ────────────────────────────── */
+.portal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.portal-nav-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: var(--radius-md);
-  animation: slideUpBounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  padding: 18px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-card);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes slideUpBounce {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.portal-nav-card:hover, .portal-nav-card:active {
+  transform: translateY(-2px);
+  border-color: var(--color-gold);
+  box-shadow: var(--shadow-gold);
 }
 
-/* --- Student PWA Styles (Thumb Zone Optimization) --- */
-.student-view-container {
-  max-width: 460px;
-  margin: 0 auto;
-  width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
+.portal-nav-card.featured {
+  border: 1.5px solid var(--color-gold);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(21, 34, 61, 0.95) 100%);
 }
 
-/* Viewfinder in Thumb Zone */
-.viewfinder-card {
+/* ─── 12. Glass Card, Badges & Admin Tables ───────────────── */
+.glass-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(229, 192, 123, 0.25);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
   position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  max-width: 320px;
-  margin: 16px auto;
-  border-radius: var(--radius-squircle);
   overflow: hidden;
-  background: #000000;
-  border: 2px solid var(--color-primary);
-  box-shadow: 0 0 25px var(--color-primary-glow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-.viewfinder-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.scan-laser {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-  box-shadow: 0 0 15px var(--color-primary);
-  animation: scanSweep 2s ease-in-out infinite alternate;
-}
-
-@keyframes scanSweep {
-  0% { top: 8%; opacity: 0.3; }
-  50% { opacity: 1; }
-  100% { top: 90%; opacity: 0.3; }
-}
-
-/* Digital Attendance Pass Ticket */
-.ticket-card {
-  background: var(--bg-surface-elevated);
-  border-radius: var(--radius-squircle);
-  border: 1px solid var(--border-glass);
-  padding: 28px 24px;
-  box-shadow: var(--shadow-success-glow);
-  text-align: center;
-  animation: springScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-@keyframes springScaleIn {
-  0% { opacity: 0; transform: scale(0.85); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-.ticket-check-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-pill);
-  background: var(--status-success-bg);
-  border: 2px solid var(--status-success);
-  color: var(--status-success);
-  display: flex;
+.badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 2.2rem;
-  margin: 0 auto 16px;
+  gap: 6px;
+  padding: 4px 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* Form Inputs */
-.form-input {
-  width: 100%;
-  min-height: var(--touch-target-min);
-  padding: 12px 18px;
-  border-radius: var(--radius-md);
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-glass);
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  margin-bottom: 16px;
+.badge-success {
+  background: var(--status-success-bg);
+  color: var(--status-success);
+  border: 1px solid var(--status-success-border);
 }
 
-.form-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px var(--color-primary-glow);
+.badge-warning {
+  background: var(--status-warning-bg);
+  color: var(--status-warning);
+  border: 1px solid var(--status-warning-border);
 }
 
-/* Motion Reduction */
+.badge-danger {
+  background: var(--status-danger-bg);
+  color: var(--status-danger);
+  border: 1px solid var(--status-danger-border);
+}
+
+.badge-info {
+  background: var(--status-info-bg);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+/* Reduced Motion Override (Accessibility standard) */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -362,3 +767,4 @@ html, body {
     transition-duration: 0.01ms !important;
   }
 }
+
